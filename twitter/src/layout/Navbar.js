@@ -9,7 +9,6 @@ import lists from "../assets/lists.png"
 import profileblack from "../assets/profileblack.png"
 import more from "../assets/more.png"
 import picbobur from "../assets/ornekboburpic.png"
-import vector from "../assets/vector.png"
 
 export default function Navbar() {
 

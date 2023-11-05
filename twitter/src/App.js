@@ -1,12 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
+import Profile from './pages/Profile';
 
 function App() {
   return (
     <div className="App">
-      <h1 class="text-3xl font-bold underline text-center">
-        Hello world!
-      </h1>
+      <Profile />
     </div>
   );
 }

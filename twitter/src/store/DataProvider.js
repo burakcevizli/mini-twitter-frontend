@@ -3,32 +3,17 @@ import DataContext from "./DataContext";
 import axios from "axios";
 
 const DataProvider = ({ children }) => {
-  const [data, setData] = useState(
-    {
-        "text": "",
-        "likes": "",
-        "retweet": "",
-        "commentsTotal": "",
-        "tweetDate": "",
-        "userTweetResponse": {
-          "firstName": "",
-          "lastName": "",
-          "profilePicture": "",
-          "userName": ""
-        }
-      }
-  );
+  const [data1, setData1] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:9000/tweet/7")
+    axios.get("http://localhost:9000/tweet/")
       .then((response) => {
-        setData(response.data)
-        console.log(response.data)
+        setData1(response.data)
       })
   }, [])
 
   return (
-    <DataContext.Provider value={{ data, setData }}>
+    <DataContext.Provider value={{ data1, setData1 }}>
       {children}
     </DataContext.Provider>
   );

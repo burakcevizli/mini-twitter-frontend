@@ -8,6 +8,7 @@ import {
   Link
 } from "react-router-dom";
 import Signup from './pages/Signup';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
 
@@ -21,6 +22,9 @@ function App() {
         </Route>
         <Route path="/signup" exact>
           <Signup />
+        </Route>
+        <Route path="/register" exact>
+          <RegisterPage />
         </Route>
       </Switch>
     </div>

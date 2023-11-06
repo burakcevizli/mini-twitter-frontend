@@ -12,18 +12,21 @@ import RegisterPage from './pages/RegisterPage';
 
 function App() {
 
-  
+
   return (
 
     <div className="App">
       <Switch>
         <Route path="/profile/:id" exact>
-          <Profile/>
+          <Profile />
         </Route>
         <Route path="/signup" exact>
           <Signup />
         </Route>
         <Route path="/register" exact>
+          <RegisterPage />
+        </Route>
+        <Route path="*">
           <RegisterPage />
         </Route>
       </Switch>

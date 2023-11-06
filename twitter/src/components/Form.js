@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function Form() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset,formState: { errors } } = useForm();
 
     const date = "2023-11-06"
 
@@ -12,16 +12,27 @@ export default function Form() {
         console.log(registerData)
 
         axios.post("http://localhost:9000/profile/register", registerData)
-            .then(response => {
+            .then((response) => {
                 console.log("Başarılı", response.data);
             })
-            .catch(error => {
-                console.error("Başarısız", error.message);
-            });
+            .catch((error) => {
+                console.error("Başarısız", error.response.data.message);
+            })
+            .finally(()=>{reset({
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: '',
+                phone: '',
+                userName: '',
+                address: '',
+                profilePicture: '',
+                profileWallpaper: '',
+                birthday: ''
+              })})
     }
 
-    console.log(errors);
-
+    
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 border-2'>

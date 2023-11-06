@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom';
 import './App.css';
 import Profile from './pages/Profile';
 import {
@@ -6,6 +7,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Signup from './pages/Signup';
 
 function App() {
 
@@ -14,8 +16,11 @@ function App() {
 
     <div className="App">
       <Switch>
-        <Route path="/profile" exact>
-          <Profile />
+        <Route path="/profile/:id" exact>
+          <Profile/>
+        </Route>
+        <Route path="/signup" exact>
+          <Signup />
         </Route>
       </Switch>
     </div>

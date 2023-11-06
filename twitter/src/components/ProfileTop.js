@@ -11,7 +11,7 @@ const ProfileTop = () => {
         <img src={leftarrow} alt='leftArrow' />
         <div>
             {/* TODO  */}
-            <h1>{data1[0].userTweetResponse?.firstName}</h1>
+            <h1>{data1[0]?.userTweetResponse?.firstName}</h1>
         </div>
     </div>
   )

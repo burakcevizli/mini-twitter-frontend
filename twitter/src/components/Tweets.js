@@ -1,14 +1,24 @@
-import React, { useContext} from 'react'
+import React, { useContext, useEffect} from 'react'
 import DataContext from '../store/DataContext'
 import comment from "../assets/comment.png"
 import retweet from "../assets/retweet.png"
 import likes from "../assets/likes.png"
 import share from "../assets/share.png"
 import statistics from "../assets/statistics.png"
+import axios from 'axios'
 
-const Tweets = () => {
+const Tweets = ({id}) => {
 
-    const { data1 } = useContext(DataContext)
+    const { data1 ,setData1} = useContext(DataContext)
+    
+    useEffect(()=>{
+        axios.get(`http://localhost:9000/tweet/profile/${id}`)
+        .then((response)=>{
+            setData1(response.data)
+            console.log(response.data)
+        })
+        
+    },[id])
 
     return (
         <div className=''>

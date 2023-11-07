@@ -8,7 +8,8 @@ import {
   Link
 } from "react-router-dom";
 import Signup from './pages/Signup';
-import RegisterPage from './pages/RegisterPage';
+import Form from './components/Form';
+import LoginPage from './pages/LoginPage';
 
 function App() {
 
@@ -24,10 +25,13 @@ function App() {
           <Signup />
         </Route>
         <Route path="/register" exact>
-          <RegisterPage />
+          <Form />
+        </Route>
+        <Route path="/login" exact>
+          <LoginPage />
         </Route>
         <Route path="*">
-          <RegisterPage />
+          <Form />
         </Route>
       </Switch>
     </div>

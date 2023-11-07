@@ -15,11 +15,11 @@ const LoginPage = () => {
             <form className='flex flex-col gap-4'>
                 <input className='border-2 pl-[1.44rem] pr-[12.12rem] py-[1.44rem] rounded-md' type="text" placeholder="Phone number , email address" {...register("Phone number , email address", { required: true })} />
                 <input className='border-2 pl-[1.44rem] pr-[12.12rem] py-[1.44rem] rounded-md' type="text" placeholder="Password" {...register("password", { required: true })} />
-                <button className='bg-[#1DA1F2] text-[#FFFFFF] font-bold py-[1.13rem] px-[12.44rem] rounded-[4.75rem] hover:bg-blue-400' type='submit'>Log in</button>
+                <button className='bg-[#1DA1F2] text-[#FFFFFF] mt-2 font-bold py-[1.13rem] px-[12.44rem] rounded-[4.75rem] hover:bg-blue-400' type='submit'>Log in</button>
             </form>
             <div className='flex justify-between mt-[2.5rem]'>
-                <p className='text-[#1DA1F2] font-semibold'>Forgot password?</p>
-                <p className='text-[#1DA1F2] font-semibold'>Forgot password?</p>
+                <p className='text-[#1DA1F2] font-semibold cursor-pointer'>Forgot password?</p>
+                <p className='text-[#1DA1F2] font-semibold cursor-pointer'>Forgot password?</p>
 
             </div>
         </div>

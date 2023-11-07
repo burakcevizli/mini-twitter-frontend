@@ -10,7 +10,21 @@ import axios from 'axios';
 const Tweets = ({ id }) => {
     const { data1, setData1 } = useContext(DataContext);
     const [alertMessage, setAlertMessage] = useState('');
+    const [edit, setEdit] = useState('');
+    const [activeId, setActiveId] = useState()
 
+    const editHandler = (data) => {
+        setEdit(data?.text)
+        setActiveId(data?.tweetId)
+    }
+    const saveHandler = () => {
+        axios.post(`http://localhost:9000/tweet/`, {
+            "user": {
+                "id": id
+            }, text: edit, tweetDate: "2023-11-06", id: activeId
+        })
+    }
+    
     useEffect(() => {
         axios
             .get(`http://localhost:9000/tweet/profile/${id}`)
@@ -46,7 +60,10 @@ const Tweets = ({ id }) => {
                                     @{data?.userTweetResponse?.userName} <span>{data?.tweetDate}</span>
                                 </p>
                             </div>
-                            <p className='my-4'>{data?.text}</p>
+                            {activeId === data?.tweetId ? <input id={data?.tweetId} name={data?.text} type="text" value={edit} onChange={(e) => {
+                                setEdit(e.target.value)
+                            }} /> : <p className='my-4'>{data?.text}</p>}
+
                             <div className='flex gap-4 mt-4'>
                                 <img src={comment} alt='comment' />
                                 <div className='flex gap-1'>
@@ -59,6 +76,8 @@ const Tweets = ({ id }) => {
                                 </div>
                                 <img src={share} alt='share' />
                                 <img src={statistics} alt='statistics' />
+                                <button id={data?.tweetId} onClick={() => editHandler(data)}> EDIT </button>
+                                <button id={data?.tweetId} onClick={() => saveHandler()}> SAVE </button>
                             </div>
                         </div>
                     </div>

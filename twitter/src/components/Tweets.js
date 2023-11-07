@@ -6,6 +6,7 @@ import likes from '../assets/likes.png';
 import share from '../assets/share.png';
 import statistics from '../assets/statistics.png';
 import axios from 'axios';
+import NewTweet from './NewTweet';
 
 const Tweets = ({ id }) => {
     const { data1, setData1 } = useContext(DataContext);
@@ -24,7 +25,7 @@ const Tweets = ({ id }) => {
             }, text: edit, tweetDate: "2023-11-06", id: activeId
         })
     }
-    
+
     useEffect(() => {
         axios
             .get(`http://localhost:9000/tweet/profile/${id}`)
@@ -40,6 +41,7 @@ const Tweets = ({ id }) => {
 
     return (
         <div>
+            <NewTweet />
             {alertMessage ? (
                 <p>{alertMessage}</p>
             ) : (

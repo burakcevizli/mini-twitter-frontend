@@ -10,9 +10,11 @@ import NewTweet from './NewTweet';
 
 const Tweets = ({ id }) => {
     const { data1, setData1 } = useContext(DataContext);
+    const { loggedInUser, setLoggedInUser } = useContext(DataContext);
     const [alertMessage, setAlertMessage] = useState('');
     const [edit, setEdit] = useState('');
     const [activeId, setActiveId] = useState()
+    const [deletedId, setDeletedId] = useState(0)
 
     const editHandler = (data) => {
         setEdit(data?.text)
@@ -23,21 +25,58 @@ const Tweets = ({ id }) => {
             "user": {
                 "id": id
             }, text: edit, tweetDate: "2023-11-06", id: activeId
-        })
+        }, {
+            auth: {
+                email: loggedInUser.email,
+                password: loggedInUser.password
+            }
+        }
+
+        )
+        setActiveId(0);
+    }
+
+    const deleteHandler = (data) => {
+        console.log("DATA : ", data)
+        console.log("DELETE ID ONCE :", deletedId)
+        setDeletedId(data?.tweetId)
+        console.log("DELETE ID SONRA :", deletedId)
+
     }
 
     useEffect(() => {
+        if (deletedId !== 0) {
+            axios.delete(`http://localhost:9000/tweet/${deletedId}`)
+                .then(axios
+                    .get(`http://localhost:9000/tweet/profile/${id}`)
+                    .then((response) => {
+                        setData1(response.data);
+                        console.log(response.data);
+                        setDeletedId(0)
+                    })
+                    .catch((error) => {
+                        console.log(error.response.data.message);
+                        setAlertMessage(error.response.data.message);
+                    }))
+        }
         axios
-            .get(`http://localhost:9000/tweet/profile/${id}`)
+            .get(`http://localhost:9000/tweet/profile/${id}`, {
+                auth: {
+                    email: loggedInUser.email,
+                    password: loggedInUser.password
+                }
+            })
             .then((response) => {
                 setData1(response.data);
                 console.log(response.data);
+
+
             })
             .catch((error) => {
                 console.log(error.response.data.message);
                 setAlertMessage(error.response.data.message);
             });
-    }, [id]);
+    }, [id, deletedId]);
 
     return (
         <div>
@@ -79,7 +118,8 @@ const Tweets = ({ id }) => {
                                 <img src={share} alt='share' />
                                 <img src={statistics} alt='statistics' />
                                 <button id={data?.tweetId} onClick={() => editHandler(data)}> EDIT </button>
-                                <button id={data?.tweetId} onClick={() => saveHandler()}> SAVE </button>
+                                {data?.tweetId === activeId ? <button id={data?.tweetId} onClick={() => saveHandler()}> SAVE </button> : ""}
+                                <button onClick={() => deleteHandler(data)}> DELETE </button>
                             </div>
                         </div>
                     </div>

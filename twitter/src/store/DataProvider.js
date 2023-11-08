@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 const DataProvider = ({ children }) => {
   const [data1, setData1] = useState([]);
-  
+  const [loggedInUser , setLoggedInUser] = useState("");
 
 //BELKİ GEREK OLUR DIYE KALSIN...
   // useEffect(() => {
@@ -16,7 +16,7 @@ const DataProvider = ({ children }) => {
   // }, [])
 
   return (
-    <DataContext.Provider value={{ data1, setData1 }}>
+    <DataContext.Provider value={{ data1, setData1 , loggedInUser ,setLoggedInUser }}>
       {children}
     </DataContext.Provider>
   );

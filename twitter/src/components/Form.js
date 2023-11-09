@@ -2,10 +2,11 @@ import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import twitterLogo from "../assets/twitter-logo.png"
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function Form() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-
+    const history = useHistory();
     const date = "2023-11-06"
 
     const onSubmit = (registerData) => {
@@ -15,6 +16,7 @@ export default function Form() {
         axios.post("http://localhost:9000/profile/register", registerData)
             .then((response) => {
                 console.log("Başarılı", response.data);
+                history.push("/login")
             })
             .catch((error) => {
                 console.error("Başarısız", error.response.data.message);

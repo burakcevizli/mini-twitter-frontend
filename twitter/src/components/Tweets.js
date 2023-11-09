@@ -27,7 +27,7 @@ const Tweets = ({ id }) => {
             }, text: edit, tweetDate: "2023-11-06", id: activeId
         }, {
             auth: {
-                email: loggedInUser.email,
+                username: loggedInUser.email,
                 password: loggedInUser.password
             }
         }
@@ -35,7 +35,7 @@ const Tweets = ({ id }) => {
         )
         setActiveId(0);
     }
-
+    console.log("loggedInUser : " , loggedInUser)
     const deleteHandler = (data) => {
         console.log("DATA : ", data)
         console.log("DELETE ID ONCE :", deletedId)
@@ -62,21 +62,21 @@ const Tweets = ({ id }) => {
         axios
             .get(`http://localhost:9000/tweet/profile/${id}`, {
                 auth: {
-                    email: loggedInUser.email,
-                    password: loggedInUser.password
+                    username: loggedInUser["email"],
+                    password: "123"
                 }
             })
             .then((response) => {
                 setData1(response.data);
-                console.log(response.data);
-
-
+                console.log("AUTH DATA  , ", response.data);
             })
             .catch((error) => {
+                console.log("CATHE DUSTU")
                 console.log(error.response.data.message);
                 setAlertMessage(error.response.data.message);
-            });
-    }, [id, deletedId]);
+
+            })
+    }, [id, deletedId,data1.length]);
 
     return (
         <div>
@@ -84,7 +84,7 @@ const Tweets = ({ id }) => {
             {alertMessage ? (
                 <p>{alertMessage}</p>
             ) : (
-                data1.map((data, index) => (
+               data1.length > 0 && data1.map((data, index) => (
                     <div key={index} className='w-[72rem] mt-12 pl-4 flex'>
                         <div>
                             <img
@@ -123,7 +123,7 @@ const Tweets = ({ id }) => {
                             </div>
                         </div>
                     </div>
-                ))
+                )) 
             )}
         </div>
     );

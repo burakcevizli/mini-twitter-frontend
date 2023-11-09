@@ -9,8 +9,9 @@ import axios from 'axios';
 import NewTweet from './NewTweet';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-const Tweets = ({ id }) => {
-    const { data1, setData1 } = useContext(DataContext);
+
+const Homepagetweets = ({ id }) => {
+    const { data1, setData1 ,allTweets , setAllTweets} = useContext(DataContext);
     const { loggedInUser, setLoggedInUser } = useContext(DataContext);
     const [alertMessage, setAlertMessage] = useState('');
     const [edit, setEdit] = useState('');
@@ -61,14 +62,14 @@ const Tweets = ({ id }) => {
                 }
             })
                 .then(axios
-                    .get(`http://localhost:9000/tweet/profile/${id}`,{
+                    .get(`http://localhost:9000/tweet/profile/${id}`, {
                         auth: {
                             username: loggedInUser.email,
                             password: "123"
                         }
                     })
                     .then((response) => {
-                        setData1(response.data);
+                        setAllTweets(response.data);
                         console.log(response.data);
                         setDeletedId(0)
                     })
@@ -78,14 +79,14 @@ const Tweets = ({ id }) => {
                     }))
         }
         axios
-            .get(`http://localhost:9000/tweet/profile/${id}`, {
+            .get(`http://localhost:9000/tweet/homepage/${loggedInUser.id}`, {
                 auth: {
                     username: loggedInUser["email"],
                     password: "123"
                 }
             })
             .then((response) => {
-                setData1(response.data);
+                setAllTweets(response.data);
                 console.log("AUTH DATA  , ", response.data);
             })
             .catch((error) => {
@@ -102,7 +103,7 @@ const Tweets = ({ id }) => {
             {alertMessage ? (
                 <p>{alertMessage}</p>
             ) : (
-                data1.length > 0 && data1.map((data, index) => (
+                allTweets.length > 0 && allTweets?.map((data, index) => (
                     <div key={index} className='w-[72rem] mt-12 pl-4 flex'>
                         <div>
                             <img
@@ -147,4 +148,4 @@ const Tweets = ({ id }) => {
     );
 };
 
-export default Tweets;
+export default Homepagetweets

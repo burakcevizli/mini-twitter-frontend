@@ -10,6 +10,7 @@ import {
 import Signup from './pages/Signup';
 import Form from './components/Form';
 import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
 
 function App() {
 
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route path="/login" exact>
           <LoginPage />
+        </Route>
+        <Route path="/homepage/:id" exact>
+          <HomePage />
         </Route>
         <Route path="*">
           <Form />

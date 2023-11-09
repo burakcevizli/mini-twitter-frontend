@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import twitterLogo from "../assets/twitter-logo.png"
 import homeLogo from "../assets/home.png"
 import explore from "../assets/explore.png"
@@ -9,8 +9,13 @@ import lists from "../assets/lists.png"
 import profileblack from "../assets/profileblack.png"
 import more from "../assets/more.png"
 import picbobur from "../assets/ornekboburpic.png"
+import DataContext from '../store/DataContext'
+import { Link } from 'react-router-dom'
 
 export default function Navbar() {
+
+    const { data1, setData1, loggedInUser } = useContext(DataContext);
+    
 
     //NAVBAR DUZELT SOLDAN ORTALA ---
     return (
@@ -18,13 +23,14 @@ export default function Navbar() {
             <img src={twitterLogo} alt='twitter' />
 
             <nav className='flex flex-col gap-4 mt-20'>
+                
                 <div className='flex gap-2'>
                     <img src={homeLogo} alt='home' />
-                    <p>Home</p>
+                   <Link to={`/profile/${loggedInUser.id}`}>  <p>Profile</p></Link>
                 </div>
                 <div className='flex gap-2'>
                     <img src={explore} alt='explore' />
-                    <p>Home</p>
+                    <Link to={`/homepage/${loggedInUser.id}`}><p>Home</p></Link>
                 </div>
                 <div className='flex gap-2'>
                     <img src={notification} alt='notification' />

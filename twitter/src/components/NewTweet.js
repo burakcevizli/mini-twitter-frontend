@@ -5,24 +5,24 @@ import { useHistory } from 'react-router-dom';
 
 const NewTweet = () => {
 
-    const { data1, setData1,loggedInUser } = useContext(DataContext);
+    const { data1, setData1, loggedInUser } = useContext(DataContext);
     const [postText, setPostText] = useState("");
     console.log("data 1 ", data1)
-   console.log("loggedInUser : " , loggedInUser)
+    console.log("loggedInUser : ", loggedInUser)
 
 
     const saveHandler = () => {
-        axios.post(`http://localhost:9000/tweet/` ,{
+        axios.post(`http://localhost:9000/tweet/`, {
             "user": {
                 "id": loggedInUser.id
             }, text: postText, tweetDate: "2023-11-06"
         },
-        {
-            auth: {
-                username: loggedInUser["email"],
-                password: "123"
+            {
+                auth: {
+                    username: loggedInUser["email"],
+                    password: "123"
+                }
             }
-        }
         ).then((response) => {
             setData1([...data1, response.data])
         }).finally(() => {

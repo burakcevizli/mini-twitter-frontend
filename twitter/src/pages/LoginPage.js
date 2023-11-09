@@ -15,8 +15,8 @@ const LoginPage = () => {
         axios.post("http://localhost:9000/profile/login", loginData)
             .then((response) => {
                 setLoggedInUser(response.data)
-                console.log("response.data : : " ,response.data)
-                history.push(`/profile/${response.data.id}`)
+                console.log("response.data : : ", response.data)
+                history.push(`/homepage/${response.data.id}`)
                 console.log("GİRDİM")
             }).catch((e) => {
                 console.log(loginData)

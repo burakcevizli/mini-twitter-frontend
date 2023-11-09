@@ -5,9 +5,9 @@ import { useParams } from "react-router-dom";
 
 const DataProvider = ({ children }) => {
   const [data1, setData1] = useState([]);
-  const [loggedInUser , setLoggedInUser] = useState("");
+  const [loggedInUser, setLoggedInUser] = useState("");
 
-//BELKİ GEREK OLUR DIYE KALSIN...
+  //BELKİ GEREK OLUR DIYE KALSIN...
   // useEffect(() => {
   //   axios.get(`http://localhost:9000/tweet/profile/`)
   //     .then((response) => {
@@ -15,8 +15,10 @@ const DataProvider = ({ children }) => {
   //     })
   // }, [])
 
+  const [allTweets, setAllTweets] = useState([]);
+
   return (
-    <DataContext.Provider value={{ data1, setData1 , loggedInUser ,setLoggedInUser }}>
+    <DataContext.Provider value={{ data1, setData1, loggedInUser, setLoggedInUser, allTweets, setAllTweets }}>
       {children}
     </DataContext.Provider>
   );

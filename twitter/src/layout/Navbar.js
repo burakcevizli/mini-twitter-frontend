@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom'
 export default function Navbar() {
 
     const { data1, setData1, loggedInUser } = useContext(DataContext);
-    
+
 
     //NAVBAR DUZELT SOLDAN ORTALA ---
     return (
@@ -23,14 +23,14 @@ export default function Navbar() {
             <img src={twitterLogo} alt='twitter' />
 
             <nav className='flex flex-col gap-4 mt-20'>
-                
+
                 <div className='flex gap-2'>
                     <img src={homeLogo} alt='home' />
-                   <Link to={`/profile/${loggedInUser.id}`}>  <p>Profile</p></Link>
+                    <Link to={`/homepage/${loggedInUser.id}`} > <p>Home</p></Link>
                 </div>
                 <div className='flex gap-2'>
                     <img src={explore} alt='explore' />
-                    <Link to={`/homepage/${loggedInUser.id}`}><p>Home</p></Link>
+                    <Link to={`/profile/${loggedInUser.id}`}> <p>Profile</p></Link>
                 </div>
                 <div className='flex gap-2'>
                     <img src={notification} alt='notification' />

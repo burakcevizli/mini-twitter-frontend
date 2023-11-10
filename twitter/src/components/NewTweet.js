@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 const NewTweet = () => {
 
-    const { data1, setData1, loggedInUser } = useContext(DataContext);
+    const { data1, setData1, loggedInUser, allTweets, setAllTweets } = useContext(DataContext);
     const [postText, setPostText] = useState("");
     console.log("data 1 ", data1)
     console.log("loggedInUser : ", loggedInUser)
@@ -25,11 +25,29 @@ const NewTweet = () => {
             }
         ).then((response) => {
             setData1([...data1, response.data])
+            getAll()
         }).finally(() => {
             setPostText("");
         })
     }
+    const getAll = () => {
+        axios.get(`http://localhost:9000/tweet/homepage/${loggedInUser.id}`, {
+            auth: {
+                username: loggedInUser["email"],
+                password: "123"
+            }
+        })
+            .then((response) => {
+                setAllTweets(response.data);
+                console.log("AUTH DATA  , ", response.data);
+            })
+            .catch((error) => {
+                console.log("CATHE DUSTU")
+                console.log(error.response.data.message);
 
+
+            })
+    }
     return (
         <div className='flex flex-col mt-10'>
             <div >
@@ -37,7 +55,7 @@ const NewTweet = () => {
             </div>
             <div>
                 <input placeholder=" What's happening" value={postText} onChange={(e) => setPostText(e.target.value)} />
-                <button className='bg-[#1DA1F2] text-white rounded-[7.5rem]' onClick={() => saveHandler()}>Tweet</button>
+                <button className='bg-[#1DA1F2] disabled:bg-[#1da0f298] text-white rounded-[7.5rem]' disabled={!postText} onClick={() => saveHandler()}>Tweet</button>
             </div>
         </div>
     )

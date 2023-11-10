@@ -98,7 +98,7 @@ const Tweets = ({ id }) => {
 
     return (
         <div>
-            <NewTweet />
+            
             {alertMessage ? (
                 <p>{alertMessage}</p>
             ) : (

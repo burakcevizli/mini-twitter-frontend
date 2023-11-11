@@ -5,7 +5,6 @@ import axios from 'axios';
 import DataContext from '../store/DataContext';
 import { useHistory } from 'react-router-dom';
 import LikesAnimation from '../components/LikesAnimation';
-import RetweetAnimation from '../components/RetweetAnimation';
 
 
 const LoginPage = () => {
@@ -45,7 +44,7 @@ const LoginPage = () => {
 
 
             <LikesAnimation />
-            <RetweetAnimation />
+            
 
         </div>
     )

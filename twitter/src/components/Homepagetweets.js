@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 const Homepagetweets = ({ id }) => {
-    const { data1, setData1 ,allTweets , setAllTweets} = useContext(DataContext);
+    const { data1, setData1, allTweets, setAllTweets } = useContext(DataContext);
     const { loggedInUser, setLoggedInUser } = useContext(DataContext);
     const [alertMessage, setAlertMessage] = useState('');
     const [edit, setEdit] = useState('');
@@ -51,6 +51,10 @@ const Homepagetweets = ({ id }) => {
         setDeletedId(data?.tweetId)
         console.log("DELETE ID SONRA :", deletedId)
         setActiveId(0);
+    }
+
+    const goOneTweetHandler = (id) => {
+        history.push(`/tweet/${id}`)
     }
 
     useEffect(() => {
@@ -106,14 +110,14 @@ const Homepagetweets = ({ id }) => {
                 allTweets.length > 0 && allTweets?.map((data, index) => (
                     <div key={index} className='w-[72rem] mt-12 pl-4 flex'>
                         <div>
-                            <img
+                            <img onClick={() => goOneTweetHandler(data?.tweetId)}
                                 src={data?.userTweetResponse?.profilePicture}
                                 alt='profile-pic'
                                 className='h-[4rem] w-[4rem] rounded-full'
                             />
                         </div>
 
-                        <div className='w-[32rem] ml-12'>
+                        <div  className='w-[32rem] ml-12'>
                             <div className='flex gap-4'>
                                 <h1 className='font-bold'>{data?.userTweetResponse?.firstName}</h1>
                                 <p className='font-light'>

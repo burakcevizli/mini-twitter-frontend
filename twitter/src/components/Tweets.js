@@ -7,7 +7,7 @@ import share from '../assets/share.png';
 import statistics from '../assets/statistics.png';
 import axios from 'axios';
 import NewTweet from './NewTweet';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 
 const Tweets = ({ id }) => {
     const { data1, setData1 } = useContext(DataContext);
@@ -17,6 +17,11 @@ const Tweets = ({ id }) => {
     const [activeId, setActiveId] = useState()
     const [deletedId, setDeletedId] = useState(0)
     const history = useHistory();
+
+    const goOneTweetHandler = (id) => {
+        history.push(`/tweet/${id}`)
+
+    }
 
     const editHandler = (data) => {
         setEdit(data?.text)
@@ -44,6 +49,7 @@ const Tweets = ({ id }) => {
 
 
     console.log("loggedInUser : ", loggedInUser)
+
     const deleteHandler = (data) => {
         console.log("DATA : ", data)
         console.log("DELETE ID ONCE :", deletedId)
@@ -61,7 +67,7 @@ const Tweets = ({ id }) => {
                 }
             })
                 .then(axios
-                    .get(`http://localhost:9000/tweet/profile/${id}`,{
+                    .get(`http://localhost:9000/tweet/profile/${id}`, {
                         auth: {
                             username: loggedInUser.email,
                             password: "123"
@@ -98,14 +104,14 @@ const Tweets = ({ id }) => {
 
     return (
         <div>
-            
+
             {alertMessage ? (
                 <p>{alertMessage}</p>
             ) : (
                 data1.length > 0 && data1.map((data, index) => (
                     <div key={index} className='w-[72rem] mt-12 pl-4 flex'>
                         <div>
-                            <img
+                            <img onClick={() => goOneTweetHandler(data?.tweetId)}
                                 src={data?.userTweetResponse?.profilePicture}
                                 alt='profile-pic'
                                 className='h-[4rem] w-[4rem] rounded-full'

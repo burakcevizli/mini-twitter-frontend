@@ -11,6 +11,8 @@ import Signup from './pages/Signup';
 import Form from './components/Form';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
+import { NavbarRight } from './layout/NavbarRight';
+import OnlyOneTweetPage from './components/OnlyOneTweetPage';
 
 function App() {
 
@@ -33,6 +35,9 @@ function App() {
         </Route>
         <Route path="/homepage/:id" exact>
           <HomePage />
+        </Route>
+        <Route path="/tweet/:id" exact>
+          <OnlyOneTweetPage />
         </Route>
         <Route path="*">
           <Form />

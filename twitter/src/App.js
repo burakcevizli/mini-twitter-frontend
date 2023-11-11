@@ -13,6 +13,7 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import { NavbarRight } from './layout/NavbarRight';
 import OnlyOneTweetPage from './components/OnlyOneTweetPage';
+import LikesAnimation from './components/LikesAnimation';
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/tweet/:id" exact>
           <OnlyOneTweetPage />
         </Route>
+        
         <Route path="*">
           <Form />
         </Route>

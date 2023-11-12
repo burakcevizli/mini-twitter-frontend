@@ -31,14 +31,14 @@ const Homepagetweets = ({ id }) => {
         }, {
             auth: {
                 username: loggedInUser.email,
-                password: loggedInUser.password
+                password: "123"
             }
         }
 
         )
             .then((response) => {
                 setData1([...data1, response.data])
-                history.push(`/profile/${loggedInUser.id}`)
+                
             })
 
     }
@@ -117,7 +117,7 @@ const Homepagetweets = ({ id }) => {
                             />
                         </div>
 
-                        <div  className='w-[32rem] ml-12'>
+                        <div className='w-[32rem] ml-12'>
                             <div className='flex gap-4'>
                                 <h1 className='font-bold'>{data?.userTweetResponse?.firstName}</h1>
                                 <p className='font-light'>
@@ -140,9 +140,9 @@ const Homepagetweets = ({ id }) => {
                                 </div>
                                 <img src={share} alt='share' />
                                 <img src={statistics} alt='statistics' />
-                                <button id={data?.tweetId} onClick={() => editHandler(data)}> EDIT </button>
+                                {data.userTweetResponse.id === loggedInUser.id && <button id={data?.tweetId} onClick={() => editHandler(data)}> EDIT </button>}
                                 {data?.tweetId === activeId ? <button id={data?.tweetId} onClick={() => saveHandler()}> SAVE </button> : ""}
-                                <button onClick={() => deleteHandler(data)}> DELETE </button>
+                                {data.userTweetResponse.id === loggedInUser.id && <button onClick={() => deleteHandler(data)}> DELETE </button>}
                             </div>
                         </div>
                     </div>

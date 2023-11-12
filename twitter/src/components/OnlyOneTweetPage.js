@@ -23,9 +23,9 @@ const OnlyOneTweetPage = () => {
     const history = useHistory();
 
 
-    const goOneTweetHandler = (id) => {
-        history.push(`/tweet/${id}`)
-    }
+    // const goOneTweetHandler = (id) => {
+    //     history.push(`/tweet/${id}`)
+    // }
 console.log("onyle one twer qwe" , data)
     const deleteHandler = (deletedData) => {
         console.log("DATA : ", deletedData)
@@ -38,19 +38,19 @@ console.log("onyle one twer qwe" , data)
     const saveHandler = () => {
         axios.post(`http://localhost:9000/tweet/`, {
             "user": {
-                "id": id
+                "id": loggedInUser.id
             }, text: edit, tweetDate: "2023-11-06", id: activeId
         }, {
             auth: {
                 username: loggedInUser.email,
-                password: loggedInUser.password
+                password: "123"
             }
         }
 
         )
             .then((response) => {
                 setData1([...data1, response.data])
-                history.push(`/profile/${loggedInUser.id}`)
+                
             })
 
     }
@@ -145,9 +145,9 @@ console.log("onyle one twer qwe" , data)
                                     </div>
                                     <img src={share} alt='share' />
                                     <img src={statistics} alt='statistics' />
-                                    <button id={data?.tweetId} onClick={() => editHandler(data)}> EDIT </button>
+                                    {data?.userTweetResponse?.id === loggedInUser?.id && <button id={data?.tweetId} onClick={() => editHandler(data)}> EDIT </button>}
                                     {data?.tweetId === activeId ? <button id={data?.tweetId} onClick={() => saveHandler()}> SAVE </button> : ""}
-                                    <button onClick={() => deleteHandler(data)}> DELETE </button>
+                                    {data?.userTweetResponse?.id === loggedInUser?.id && <button onClick={() => deleteHandler(data)}> DELETE </button>}
                                 </div>
                             </div>
                         </div>

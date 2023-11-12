@@ -49,13 +49,13 @@ const NewTweet = () => {
             })
     }
     return (
-        <div className='flex flex-col mt-10'>
-            <div >
-                <img className='h-[4rem] w-[4rem] rounded-full' src={loggedInUser.profilePicture} alt='resim' />
-            </div>
-            <div>
-                <input placeholder=" What's happening" value={postText} onChange={(e) => setPostText(e.target.value)} />
-                <button className='bg-[#1DA1F2] disabled:bg-[#1da0f298] text-white rounded-[7.5rem]' disabled={!postText} onClick={() => saveHandler()}>Tweet</button>
+        <div className='mt-10 ml-4 flex gap-8'>
+
+            <img className='h-[4rem] w-[4rem] rounded-full' src={loggedInUser.profilePicture} alt='resim' />
+
+            <div className='w-[30rem] flex justify-between'>
+                <input className='w-[20rem] h-[4rem] border-2' placeholder=" What's happening ?" value={postText} onChange={(e) => setPostText(e.target.value)} />
+                <button className='bg-[#1DA1F2] disabled:bg-[#1da0f298] text-white rounded-[5rem] px-8' disabled={!postText} onClick={() => saveHandler()}>Tweet</button>
             </div>
         </div>
     )

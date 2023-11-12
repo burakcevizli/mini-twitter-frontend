@@ -141,9 +141,9 @@ const Tweets = ({ id }) => {
                                 </div>
                                 <img src={share} alt='share' />
                                 <img src={statistics} alt='statistics' />
-                                <button id={data?.tweetId} onClick={() => editHandler(data)}> EDIT </button>
+                                {data.userTweetResponse.id === loggedInUser.id && <button id={data?.tweetId} onClick={() => editHandler(data)}> EDIT </button>}
                                 {data?.tweetId === activeId ? <button id={data?.tweetId} onClick={() => saveHandler()}> SAVE </button> : ""}
-                                <button onClick={() => deleteHandler(data)}> DELETE </button>
+                                {data.userTweetResponse.id === loggedInUser.id && <button onClick={() => deleteHandler(data)}> DELETE </button>}
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,8 @@ import axios from 'axios';
 import DataContext from '../store/DataContext';
 import { useHistory } from 'react-router-dom';
 import LikesAnimation from '../components/LikesAnimation';
+import Signup from './Signup';
+import { Link } from 'react-router-dom';
 
 
 const LoginPage = () => {
@@ -38,13 +40,13 @@ const LoginPage = () => {
             </form>
             <div className='flex justify-between mt-[2.5rem]'>
                 <p className='text-[#1DA1F2] font-semibold cursor-pointer'>Forgot password?</p>
-                <p className='text-[#1DA1F2] font-semibold cursor-pointer'>Sign up twitter</p>
+                <Link to={"/register"}><p className='text-[#1DA1F2] font-semibold cursor-pointer'>Sign up twitter</p></Link>
 
             </div>
 
 
             <LikesAnimation />
-            
+
 
         </div>
     )

@@ -19,42 +19,43 @@ export default function Navbar() {
 
     //NAVBAR DUZELT SOLDAN ORTALA ---
     return (
-        <div className='w-[20rem] '>
-            <img src={twitterLogo} alt='twitter' />
+        <div className='w-[50rem] mt-12'>
+            <img src={twitterLogo} className='mx-auto' alt='twitter' />
 
-            <nav className='flex flex-col gap-4 mt-20'>
+            <nav className='flex flex-col items-center gap-4 mt-20'>
 
                 <div className='flex gap-2'>
                     <img src={homeLogo} alt='home' />
                     <Link to={`/homepage/${loggedInUser.id}`} > <p>Home</p></Link>
                 </div>
                 <div className='flex gap-2'>
-                    <img src={explore} alt='explore' />
+
+                    <img src={profileblack} alt='profileblack' />
                     <Link to={`/profile/${loggedInUser.id}`}> <p>Profile</p></Link>
                 </div>
                 <div className='flex gap-2'>
                     <img src={notification} alt='notification' />
-                    <p>notification</p>
+                    <p>Notification</p>
                 </div>
                 <div className='flex gap-2'>
                     <img src={messages} alt='messages' />
-                    <p>messages</p>
+                    <p>Messages</p>
                 </div>
                 <div className='flex gap-2'>
                     <img src={bookmarks} alt='bookmarks' />
-                    <p>bookmarks</p>
+                    <p>Bookmarks</p>
                 </div>
                 <div className='flex gap-2'>
                     <img src={lists} alt='lists' />
-                    <p>lists</p>
+                    <p>Lists</p>
                 </div>
                 <div className='flex gap-2'>
-                    <img src={profileblack} alt='profileblack' />
-                    <p>profileblack</p>
+                    <img src={explore} alt='explore' />
+                    <p>Explore</p>
                 </div>
                 <div className='flex gap-2'>
                     <img src={more} alt='more' />
-                    <p>more</p>
+                    <p>More</p>
                 </div>
                 <div>
                     <button className='bg-[#1D9BF0] text-[#FFFFFF] text-[1.125rem] rounded-[1.17rem] px-6 py-1'>
@@ -64,13 +65,12 @@ export default function Navbar() {
 
             </nav>
 
-            <div className='flex mt-20 gap-4'>
-                <img src={picbobur} alt='bobur' />
+            <div className='flex mt-20 gap-4 justify-center'>
+                <img className='h-[4rem] w-[4rem] rounded-full' src={loggedInUser.profilePicture} alt='bobur' />
                 <div className='pt-4'>
-                    <h1>Bobur</h1>
-                    <p>@backkenden cek userne</p>
+                    <h1>{loggedInUser.firstName}</h1>
+                    <p>{loggedInUser.userName}</p>
                 </div>
-                <p className='text-[3rem] cursor-pointer'>...</p>
             </div>
         </div>
     )

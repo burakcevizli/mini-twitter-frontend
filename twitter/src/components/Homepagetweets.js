@@ -14,6 +14,7 @@ const Homepagetweets = ({ id }) => {
     const { data1, setData1, allTweets, setAllTweets } = useContext(DataContext);
     const { loggedInUser, setLoggedInUser } = useContext(DataContext);
     const [alertMessage, setAlertMessage] = useState('');
+    const [likedTweet, setLikedTweet] = useState(0);
     const [edit, setEdit] = useState('');
     const [activeId, setActiveId] = useState()
     const [deletedId, setDeletedId] = useState(0)
@@ -23,6 +24,28 @@ const Homepagetweets = ({ id }) => {
         setEdit(data?.text)
         setActiveId(data?.tweetId)
     }
+/*
+
+
+    const likedTweetByUsers = (findMethodTweetId) =>
+
+   
+
+    allTweets.find(eachTweet => {
+        eachTweet.id === findMethodTweetId
+        return eachTweet.likedUserIdList
+    })
+
+    const likedTweetHandler = (tweetId) => {
+        if (tweetId !== 0) {
+            axios.post("http://localhost:9000/tweet/like/")
+        }
+    }
+
+BURAYA BAK POSTLAMA VE LIKEDUSERID LIST YAZMISTIK . Kontrol et backend tamamç.
+
+
+*/
     const saveHandler = () => {
         axios.post(`http://localhost:9000/tweet/`, {
             "user": {
@@ -38,12 +61,12 @@ const Homepagetweets = ({ id }) => {
         )
             .then((response) => {
                 setData1([...data1, response.data])
-                
+
             })
 
     }
 
-
+    console.log("ALLL TWEETS DATA ", allTweets)
     console.log("loggedInUser : ", loggedInUser)
     const deleteHandler = (data) => {
         console.log("DATA : ", data)

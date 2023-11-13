@@ -24,28 +24,13 @@ const Homepagetweets = ({ id }) => {
         setEdit(data?.text)
         setActiveId(data?.tweetId)
     }
-/*
 
 
-    const likedTweetByUsers = (findMethodTweetId) =>
-
-   
-
-    allTweets.find(eachTweet => {
-        eachTweet.id === findMethodTweetId
-        return eachTweet.likedUserIdList
-    })
-
-    const likedTweetHandler = (tweetId) => {
-        if (tweetId !== 0) {
-            axios.post("http://localhost:9000/tweet/like/")
-        }
+    const likeOnClickHandler = (data) => {
+        setLikedTweet(data?.tweetId)
     }
 
-BURAYA BAK POSTLAMA VE LIKEDUSERID LIST YAZMISTIK . Kontrol et backend tamamç.
 
-
-*/
     const saveHandler = () => {
         axios.post(`http://localhost:9000/tweet/`, {
             "user": {
@@ -103,8 +88,36 @@ BURAYA BAK POSTLAMA VE LIKEDUSERID LIST YAZMISTIK . Kontrol et backend tamamç.
                     .catch((error) => {
                         console.log(error.response.data.message);
                         setAlertMessage(error.response.data.message);
+                        setDeletedId(0)
                     }))
         }
+        if (likedTweet !== 0) {
+            axios.post(`http://localhost:9000/tweet/like/${likedTweet}`, { "id": loggedInUser.id }, {
+                auth: {
+                    username: loggedInUser.email,
+                    password: "123"
+                }
+            })
+                .then(axios
+                    .get(`http://localhost:9000/tweet/profile/${id}`, {
+                        auth: {
+                            username: loggedInUser.email,
+                            password: "123"
+                        }
+                    })
+                    .then((response) => {
+                        setAllTweets(response.data);
+                        console.log(response.data);
+                        setLikedTweet(0)
+                    })
+                    .catch((error) => {
+                        console.log(error.response.data.message);
+                        setAlertMessage(error.response.data.message);
+                        setLikedTweet(0)
+                    }))
+        }
+
+
         axios
             .get(`http://localhost:9000/tweet/homepage/${loggedInUser.id}`, {
                 auth: {
@@ -122,7 +135,7 @@ BURAYA BAK POSTLAMA VE LIKEDUSERID LIST YAZMISTIK . Kontrol et backend tamamç.
                 setAlertMessage(error.response.data.message);
 
             })
-    }, [id, deletedId]);
+    }, [id, deletedId, likedTweet]);
 
     return (
         <div>
@@ -158,8 +171,9 @@ BURAYA BAK POSTLAMA VE LIKEDUSERID LIST YAZMISTIK . Kontrol et backend tamamç.
                                     <p>{data?.retweet}</p>
                                 </div>
                                 <div className='flex gap-1'>
-                                    <img src={likes} alt='likes' />
-                                    <p>{data?.likes}</p>
+                                    <img onClick={() => likeOnClickHandler(data)} src={likes} alt='likes' />
+                                    <p onClick={() => likeOnClickHandler(data)}>{data?.likes}</p>
+                                    <p>{data.likedUserIdList?.length === 0 ? null : data.likedUserIdList?.length}</p>
                                 </div>
                                 <img src={share} alt='share' />
                                 <img src={statistics} alt='statistics' />

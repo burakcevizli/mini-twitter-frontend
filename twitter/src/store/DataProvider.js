@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 const DataProvider = ({ children }) => {
   const [data1, setData1] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState("");
+  const [commentTweetId, setCommentTweetId] = useState(0);
 
   //BELKİ GEREK OLUR DIYE KALSIN...
   // useEffect(() => {
@@ -18,7 +19,7 @@ const DataProvider = ({ children }) => {
   const [allTweets, setAllTweets] = useState([]);
 
   return (
-    <DataContext.Provider value={{ data1, setData1, loggedInUser, setLoggedInUser, allTweets, setAllTweets }}>
+    <DataContext.Provider value={{ data1, setData1, loggedInUser, setLoggedInUser, allTweets, setAllTweets,commentTweetId, setCommentTweetId }}>
       {children}
     </DataContext.Provider>
   );

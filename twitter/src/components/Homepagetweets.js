@@ -8,26 +8,39 @@ import statistics from '../assets/statistics.png';
 import axios from 'axios';
 import NewTweet from './NewTweet';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import CommentTweet from './CommentTweet';
 
 
 const Homepagetweets = ({ id }) => {
-    const { data1, setData1, allTweets, setAllTweets } = useContext(DataContext);
+    const { data1, setData1, allTweets, setAllTweets,commentTweetId, setCommentTweetId } = useContext(DataContext);
     const { loggedInUser, setLoggedInUser } = useContext(DataContext);
     const [alertMessage, setAlertMessage] = useState('');
     const [likedTweet, setLikedTweet] = useState(0);
+    const [dislikedTweet, setDislikedTweet] = useState(0);
+    const [retweetTweet, setRetweetTweet] = useState(0);
+    const [unretweetTweet, setUnRetweetTweet] = useState(0);
     const [edit, setEdit] = useState('');
     const [activeId, setActiveId] = useState()
     const [deletedId, setDeletedId] = useState(0)
+   
     const history = useHistory();
 
     const editHandler = (data) => {
         setEdit(data?.text)
         setActiveId(data?.tweetId)
     }
-
+    const retweetHandler = (data) => {
+        setRetweetTweet(data?.tweetId)
+    }
+    const unRetweetHandler = (data) => {
+        setUnRetweetTweet(data?.tweetId)
+    }
 
     const likeOnClickHandler = (data) => {
         setLikedTweet(data?.tweetId)
+    }
+    const dislikedTweetOnClickHandler = (data) => {
+        setDislikedTweet(data?.tweetId)
     }
 
 
@@ -65,6 +78,10 @@ const Homepagetweets = ({ id }) => {
         history.push(`/tweet/${id}`)
     }
 
+    const commentHandler = (data) => {
+        setCommentTweetId(data?.tweetId);
+    }
+
     useEffect(() => {
         if (deletedId !== 0) {
             axios.delete(`http://localhost:9000/tweet/${deletedId}`, {
@@ -91,6 +108,59 @@ const Homepagetweets = ({ id }) => {
                         setDeletedId(0)
                     }))
         }
+        if (retweetTweet !== 0) {
+            axios.post(`http://localhost:9000/tweet/retweet/${retweetTweet}`, { "id": loggedInUser.id }, {
+                auth: {
+                    username: loggedInUser.email,
+                    password: "123"
+                }
+            })
+                .then(axios
+                    .get(`http://localhost:9000/tweet/profile/${id}`, {
+                        auth: {
+                            username: loggedInUser.email,
+                            password: "123"
+                        }
+                    })
+                    .then((response) => {
+                        setAllTweets(response.data);
+                        console.log(response.data);
+                        setRetweetTweet(0)
+                    })
+                    .catch((error) => {
+                        console.log(error.message);
+                        setAlertMessage(error.message);
+                        setRetweetTweet(0)
+                    }))
+
+        }
+        if (unretweetTweet !== 0) {
+            axios.post(`http://localhost:9000/tweet/unretweet/${unretweetTweet}`, { "id": loggedInUser.id }, {
+                auth: {
+                    username: loggedInUser.email,
+                    password: "123"
+                }
+            })
+                .then(axios
+                    .get(`http://localhost:9000/tweet/profile/${id}`, {
+                        auth: {
+                            username: loggedInUser.email,
+                            password: "123"
+                        }
+                    })
+                    .then((response) => {
+                        setAllTweets(response.data);
+                        console.log(response.data);
+                        setUnRetweetTweet(0)
+                    })
+                    .catch((error) => {
+                        console.log(error.message);
+                        setAlertMessage(error.message);
+                        setUnRetweetTweet(0)
+                    }))
+
+
+        }
         if (likedTweet !== 0) {
             axios.post(`http://localhost:9000/tweet/like/${likedTweet}`, { "id": loggedInUser.id }, {
                 auth: {
@@ -111,12 +181,39 @@ const Homepagetweets = ({ id }) => {
                         setLikedTweet(0)
                     })
                     .catch((error) => {
-                        console.log(error.response.data.message);
-                        setAlertMessage(error.response.data.message);
+                        console.log(error.message);
+                        setAlertMessage(error.message);
                         setLikedTweet(0)
                     }))
-        }
 
+        }
+        if (dislikedTweet !== 0) {
+            axios.post(`http://localhost:9000/tweet/dislike/${dislikedTweet}`, { "id": loggedInUser.id }, {
+                auth: {
+                    username: loggedInUser.email,
+                    password: "123"
+                }
+            })
+                .then(axios
+                    .get(`http://localhost:9000/tweet/profile/${id}`, {
+                        auth: {
+                            username: loggedInUser.email,
+                            password: "123"
+                        }
+                    })
+                    .then((response) => {
+                        setAllTweets(response.data);
+                        console.log(response.data);
+                        setDislikedTweet(0)
+                    })
+                    .catch((error) => {
+                        console.log(error.message);
+                        setAlertMessage(error.message);
+                        setDislikedTweet(0)
+                    }))
+
+
+        }
 
         axios
             .get(`http://localhost:9000/tweet/homepage/${loggedInUser.id}`, {
@@ -135,7 +232,7 @@ const Homepagetweets = ({ id }) => {
                 setAlertMessage(error.response.data.message);
 
             })
-    }, [id, deletedId, likedTweet]);
+    }, [id, deletedId, likedTweet, dislikedTweet, retweetTweet, unretweetTweet]);
 
     return (
         <div>
@@ -165,14 +262,16 @@ const Homepagetweets = ({ id }) => {
                             }} /> : <p className='my-4'>{data?.text}</p>}
 
                             <div className='flex gap-4 mt-4'>
-                                <img src={comment} alt='comment' />
+                                <img onClick={()=> commentHandler(data)} src={comment} alt='comment' />
+                                <p>{data.commentsTweetIdList?.length}</p>
+                               
                                 <div className='flex gap-1'>
-                                    <img src={retweet} alt='retweet' />
-                                    <p>{data?.retweet}</p>
+                                    {data.retweetsUserIdList?.includes(loggedInUser.id) ? <img onClick={() => unRetweetHandler(data)} src={retweet} alt='retweet' /> : <img onClick={() => retweetHandler(data)} src="https://file.rendit.io/n/STwpuiuwPmCkjEtyn2qO.svg" alt="Vector" className="w-6" />}
+                                   
                                 </div>
                                 <div className='flex gap-1'>
-                                    <img onClick={() => likeOnClickHandler(data)} src={likes} alt='likes' />
-                                    <p onClick={() => likeOnClickHandler(data)}>{data?.likes}</p>
+                                    {data.likedUserIdList?.includes(loggedInUser.id) ? <img onClick={() => dislikedTweetOnClickHandler(data)} src={likes} alt='likes' /> : <p onClick={() => likeOnClickHandler(data)}>🤍</p>}
+                                    <p>{data?.likes}</p>
                                     <p>{data.likedUserIdList?.length === 0 ? null : data.likedUserIdList?.length}</p>
                                 </div>
                                 <img src={share} alt='share' />
@@ -181,6 +280,13 @@ const Homepagetweets = ({ id }) => {
                                 {data?.tweetId === activeId ? <button id={data?.tweetId} onClick={() => saveHandler()}> SAVE </button> : ""}
                                 {data.userTweetResponse.id === loggedInUser.id && <button onClick={() => deleteHandler(data)}> DELETE </button>}
                             </div>
+                            {commentTweetId === data.tweetId && <CommentTweet />}
+                            {data.commentsTweetIdList?.length > 0 && data.commentsTweetIdList.map(comment => (
+                                <div key={comment.id}>
+                                    <p>asd</p> 
+                                    {/* BURASI DUZELTILECEK KISIMDI AXOIS VS .... */}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 ))

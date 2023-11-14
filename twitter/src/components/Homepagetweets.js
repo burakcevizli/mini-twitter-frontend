@@ -9,6 +9,7 @@ import axios from 'axios';
 import NewTweet from './NewTweet';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import CommentTweet from './CommentTweet';
+import NewCommentTweet from './NewCommentTweet';
 
 
 const Homepagetweets = ({ id }) => {
@@ -232,7 +233,7 @@ const Homepagetweets = ({ id }) => {
                 setAlertMessage(error.response.data.message);
 
             })
-    }, [id, deletedId, likedTweet, dislikedTweet, retweetTweet, unretweetTweet]);
+    }, [id, deletedId, likedTweet, dislikedTweet,commentTweetId, retweetTweet, unretweetTweet]);
 
     return (
         <div>
@@ -280,10 +281,10 @@ const Homepagetweets = ({ id }) => {
                                 {data?.tweetId === activeId ? <button id={data?.tweetId} onClick={() => saveHandler()}> SAVE </button> : ""}
                                 {data.userTweetResponse.id === loggedInUser.id && <button onClick={() => deleteHandler(data)}> DELETE </button>}
                             </div>
-                            {commentTweetId === data.tweetId && <CommentTweet />}
+                            {commentTweetId === data.tweetId &&  <CommentTweet />}
                             {data.commentsTweetIdList?.length > 0 && data.commentsTweetIdList.map(comment => (
-                                <div key={comment.id}>
-                                    <p>asd</p> 
+                                <div>
+                                    <NewCommentTweet comId = {comment}/>
                                     {/* BURASI DUZELTILECEK KISIMDI AXOIS VS .... */}
                                 </div>
                             ))}

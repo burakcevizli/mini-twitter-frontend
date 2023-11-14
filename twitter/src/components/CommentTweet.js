@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 const CommentTweet = () => {
 
-    const { data1, setData1, loggedInUser, allTweets, setAllTweets,commentTweetId, setCommentTweetId } = useContext(DataContext);
+    const { data1, setData1, loggedInUser, allTweets, setAllTweets, commentTweetId, setCommentTweetId } = useContext(DataContext);
     const [postText, setPostText] = useState("");
     console.log("data 1 ", data1)
     console.log("loggedInUser : ", loggedInUser)
@@ -27,6 +27,7 @@ const CommentTweet = () => {
             setData1([...data1, response.data])
             getAll()
         }).finally(() => {
+            setCommentTweetId(0)
             setPostText("");
         })
     }

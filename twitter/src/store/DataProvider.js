@@ -15,6 +15,7 @@ const DataProvider = ({ children }) => {
   //       setData1(response.data)
   //     })
   // }, [])
+  
 
   const [allTweets, setAllTweets] = useState([]);
 

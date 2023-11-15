@@ -7,7 +7,7 @@ export const NavbarRight = () => {
     const { data1, setData1, loggedInUser } = useContext(DataContext);
 
     return (
-        <div className='w-[50rem]'>
+        <div className='w-[50rem]' >
             <input className='w-[21rem] my-5' placeholder='Search Twitter' />
             <div>
                 <img src={frame14} alt='frame14' />

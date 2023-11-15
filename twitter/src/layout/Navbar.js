@@ -26,10 +26,10 @@ export default function Navbar() {
 
     //NAVBAR DUZELT SOLDAN ORTALA ---
     return (
-        <div className='w-[50rem] mt-12'>
-            <img src={twitterLogo} className='mx-auto' alt='twitter' />
+        <div className='w-[50rem] mt-20'>
+            <img src={twitterLogo} className='ml-12 mt-20 ' alt='twitter' style={{ position: 'fixed'}} />
 
-            <nav className='flex flex-col items-center gap-4 mt-20'>
+            <nav className='flex flex-col items-center ml-4 gap-4 mt-32' style={{ position: 'fixed'}}>
 
                 <div className='flex gap-2'>
                     <img src={homeLogo} alt='home' />
@@ -75,7 +75,7 @@ export default function Navbar() {
 
             </nav>
 
-            <div className='flex mt-20 gap-4 justify-center'>
+            <div className='flex gap-4 ml-4 justify-center' style={{ position: 'fixed'}}>
                 <img className='h-[4rem] w-[4rem] rounded-full' src={loggedInUser.profilePicture} alt='bobur' />
                 <div className='pt-4'>
                     <h1>{loggedInUser.firstName}</h1>

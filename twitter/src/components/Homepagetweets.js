@@ -118,7 +118,7 @@ const Homepagetweets = ({ id }) => {
                     }
                 })
                     .then(axios
-                        .get(`http://localhost:9000/tweet/profile/${id}`, {
+                        .get(`http://localhost:9000/tweet/homepage/${loggedInUser.id}`, {
                             auth: {
                                 username: loggedInUser.email,
                                 password: "123"
@@ -144,7 +144,7 @@ const Homepagetweets = ({ id }) => {
                     }
                 })
                     .then(axios
-                        .get(`http://localhost:9000/tweet/profile/${id}`, {
+                        .get(`http://localhost:9000/tweet/homepage/${loggedInUser.id}`, {
                             auth: {
                                 username: loggedInUser.email,
                                 password: "123"
@@ -171,7 +171,7 @@ const Homepagetweets = ({ id }) => {
                     }
                 })
                     .then(axios
-                        .get(`http://localhost:9000/tweet/profile/${id}`, {
+                        .get(`http://localhost:9000/tweet/homepage/${loggedInUser.id}`, {
                             auth: {
                                 username: loggedInUser.email,
                                 password: "123"
@@ -197,7 +197,7 @@ const Homepagetweets = ({ id }) => {
                     }
                 })
                     .then(axios
-                        .get(`http://localhost:9000/tweet/profile/${id}`, {
+                        .get(`http://localhost:9000/tweet/homepage/${loggedInUser.id}`, {
                             auth: {
                                 username: loggedInUser.email,
                                 password: "123"
@@ -235,7 +235,7 @@ const Homepagetweets = ({ id }) => {
 
                 })
         }
-    }, [id, deletedId, likedTweet, dislikedTweet, commentTweetId, retweetTweet, unretweetTweet,loggedInUser]);
+    }, [id, deletedId, likedTweet, dislikedTweet, commentTweetId, retweetTweet, unretweetTweet, loggedInUser]);
 
     useEffect(() => {
         setLoggedInUser(JSON.parse(localStorage?.getItem("loggedInUser")))

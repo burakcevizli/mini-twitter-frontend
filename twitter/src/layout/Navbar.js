@@ -11,11 +11,18 @@ import more from "../assets/more.png"
 import picbobur from "../assets/ornekboburpic.png"
 import DataContext from '../store/DataContext'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 export default function Navbar() {
 
-    const { data1, setData1, loggedInUser } = useContext(DataContext);
+    const { data1, setData1, loggedInUser, setLoggedInUser } = useContext(DataContext);
+    const history = useHistory()
 
+    const logoutHandler = () => {
+        localStorage.clear()
+        setLoggedInUser("")
+        history.push("/login")
+    }
 
     //NAVBAR DUZELT SOLDAN ORTALA ---
     return (
@@ -57,9 +64,12 @@ export default function Navbar() {
                     <img src={more} alt='more' />
                     <p>More</p>
                 </div>
-                <div>
+                <div className='flex flex-col gap-4'>
                     <button className='bg-[#1D9BF0] text-[#FFFFFF] text-[1.125rem] rounded-[1.17rem] px-6 py-1'>
                         Tweet
+                    </button>
+                    <button onClick={() => logoutHandler()} className='bg-[#1D9BF0] text-[#FFFFFF] text-[1.125rem] rounded-[1.17rem] px-6 py-1'>
+                        Çıkış Yap
                     </button>
                 </div>
 

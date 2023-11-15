@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import twitterLogo from "../assets/twitter-logo.png"
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -13,12 +13,15 @@ const LoginPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { loggedInUser, setLoggedInUser } = useContext(DataContext);
     const history = useHistory()
+    const [storedUser, setStoredUser] = useState("");
 
     const onSubmit = (loginData) => {
         axios.post("http://localhost:9000/profile/login", loginData)
             .then((response) => {
                 setLoggedInUser(response.data)
                 console.log("response.data : : ", response.data)
+                localStorage.setItem("loggedInUser", JSON.stringify(response.data))
+                console.log("LOGIN DAHA KAYDETMEK ICIN ", loggedInUser)
                 history.push(`/homepage/${response.data.id}`)
                 console.log("GİRDİM")
             }).catch((e) => {
@@ -26,9 +29,25 @@ const LoginPage = () => {
                 console.log("Login olmadı , : ", e.message)
             })
     }
+    
+    if (storedUser) {
 
+        const storedLoginData = { email: storedUser.email, password: "123" };
 
+        axios.post("http://localhost:9000/profile/login", storedLoginData)
+            .then((response) => {
+                setLoggedInUser(response.data);
+                history.push(`/homepage/${response.data.id}`);
+            })
+            .catch((e) => {
+                console.log("Automatic login failed:", e.message);
+            });
+    }
 
+    useEffect(() => {
+        setStoredUser(JSON.parse(localStorage?.getItem("loggedInUser")));
+        setLoggedInUser(JSON.parse(localStorage?.getItem("loggedInUser")))
+    }, []);
     return (
         <div className='w-[30rem] mx-auto'>
             <img src={twitterLogo} className='mt-[3.75rem] w-[3.125rem] h-[2.56rem]' alt='twitterLogo' />

@@ -13,7 +13,7 @@ import NewCommentTweet from './NewCommentTweet';
 
 
 const Homepagetweets = ({ id }) => {
-    const { data1, setData1, allTweets, setAllTweets,commentTweetId, setCommentTweetId } = useContext(DataContext);
+    const { data1, setData1, allTweets, setAllTweets, commentTweetId, setCommentTweetId } = useContext(DataContext);
     const { loggedInUser, setLoggedInUser } = useContext(DataContext);
     const [alertMessage, setAlertMessage] = useState('');
     const [likedTweet, setLikedTweet] = useState(0);
@@ -23,7 +23,7 @@ const Homepagetweets = ({ id }) => {
     const [edit, setEdit] = useState('');
     const [activeId, setActiveId] = useState()
     const [deletedId, setDeletedId] = useState(0)
-   
+
     const history = useHistory();
 
     const editHandler = (data) => {
@@ -84,156 +84,162 @@ const Homepagetweets = ({ id }) => {
     }
 
     useEffect(() => {
-        if (deletedId !== 0) {
-            axios.delete(`http://localhost:9000/tweet/${deletedId}`, {
-                auth: {
-                    username: loggedInUser.email,
-                    password: "123"
-                }
-            })
-                .then(axios
-                    .get(`http://localhost:9000/tweet/profile/${id}`, {
-                        auth: {
-                            username: loggedInUser.email,
-                            password: "123"
-                        }
-                    })
-                    .then((response) => {
-                        setAllTweets(response.data);
-                        console.log(response.data);
-                        setDeletedId(0)
-                    })
-                    .catch((error) => {
-                        console.log(error.response.data.message);
-                        setAlertMessage(error.response.data.message);
-                        setDeletedId(0)
-                    }))
+        if (loggedInUser) {
+            if (deletedId !== 0) {
+                axios.delete(`http://localhost:9000/tweet/${deletedId}`, {
+                    auth: {
+                        username: loggedInUser.email,
+                        password: "123"
+                    }
+                })
+                    .then(axios
+                        .get(`http://localhost:9000/tweet/profile/${id}`, {
+                            auth: {
+                                username: loggedInUser.email,
+                                password: "123"
+                            }
+                        })
+                        .then((response) => {
+                            setAllTweets(response.data);
+                            console.log(response.data);
+                            setDeletedId(0)
+                        })
+                        .catch((error) => {
+                            console.log(error.response.data.message);
+                            setAlertMessage(error.response.data.message);
+                            setDeletedId(0)
+                        }))
+            }
+            if (retweetTweet !== 0) {
+                axios.post(`http://localhost:9000/tweet/retweet/${retweetTweet}`, { "id": loggedInUser.id }, {
+                    auth: {
+                        username: loggedInUser.email,
+                        password: "123"
+                    }
+                })
+                    .then(axios
+                        .get(`http://localhost:9000/tweet/profile/${id}`, {
+                            auth: {
+                                username: loggedInUser.email,
+                                password: "123"
+                            }
+                        })
+                        .then((response) => {
+                            setAllTweets(response.data);
+                            console.log(response.data);
+                            setRetweetTweet(0)
+                        })
+                        .catch((error) => {
+                            console.log(error.message);
+                            setAlertMessage(error.message);
+                            setRetweetTweet(0)
+                        }))
+
+            }
+            if (unretweetTweet !== 0) {
+                axios.post(`http://localhost:9000/tweet/unretweet/${unretweetTweet}`, { "id": loggedInUser.id }, {
+                    auth: {
+                        username: loggedInUser.email,
+                        password: "123"
+                    }
+                })
+                    .then(axios
+                        .get(`http://localhost:9000/tweet/profile/${id}`, {
+                            auth: {
+                                username: loggedInUser.email,
+                                password: "123"
+                            }
+                        })
+                        .then((response) => {
+                            setAllTweets(response.data);
+                            console.log(response.data);
+                            setUnRetweetTweet(0)
+                        })
+                        .catch((error) => {
+                            console.log(error.message);
+                            setAlertMessage(error.message);
+                            setUnRetweetTweet(0)
+                        }))
+
+
+            }
+            if (likedTweet !== 0) {
+                axios.post(`http://localhost:9000/tweet/like/${likedTweet}`, { "id": loggedInUser.id }, {
+                    auth: {
+                        username: loggedInUser.email,
+                        password: "123"
+                    }
+                })
+                    .then(axios
+                        .get(`http://localhost:9000/tweet/profile/${id}`, {
+                            auth: {
+                                username: loggedInUser.email,
+                                password: "123"
+                            }
+                        })
+                        .then((response) => {
+                            setAllTweets(response.data);
+                            console.log(response.data);
+                            setLikedTweet(0)
+                        })
+                        .catch((error) => {
+                            console.log(error.message);
+                            setAlertMessage(error.message);
+                            setLikedTweet(0)
+                        }))
+
+            }
+            if (dislikedTweet !== 0) {
+                axios.post(`http://localhost:9000/tweet/dislike/${dislikedTweet}`, { "id": loggedInUser.id }, {
+                    auth: {
+                        username: loggedInUser.email,
+                        password: "123"
+                    }
+                })
+                    .then(axios
+                        .get(`http://localhost:9000/tweet/profile/${id}`, {
+                            auth: {
+                                username: loggedInUser.email,
+                                password: "123"
+                            }
+                        })
+                        .then((response) => {
+                            setAllTweets(response.data);
+                            console.log(response.data);
+                            setDislikedTweet(0)
+                        })
+                        .catch((error) => {
+                            console.log(error.message);
+                            setAlertMessage(error.message);
+                            setDislikedTweet(0)
+                        }))
+
+
+            }
+
+            axios
+                .get(`http://localhost:9000/tweet/homepage/${loggedInUser.id}`, {
+                    auth: {
+                        username: loggedInUser["email"],
+                        password: "123"
+                    }
+                })
+                .then((response) => {
+                    setAllTweets(response.data);
+                    console.log("AUTH DATA  , ", response.data);
+                })
+                .catch((error) => {
+                    console.log("CATHE DUSTU")
+                    console.log(error.response.data.message);
+                    setAlertMessage(error.response.data.message);
+
+                })
         }
-        if (retweetTweet !== 0) {
-            axios.post(`http://localhost:9000/tweet/retweet/${retweetTweet}`, { "id": loggedInUser.id }, {
-                auth: {
-                    username: loggedInUser.email,
-                    password: "123"
-                }
-            })
-                .then(axios
-                    .get(`http://localhost:9000/tweet/profile/${id}`, {
-                        auth: {
-                            username: loggedInUser.email,
-                            password: "123"
-                        }
-                    })
-                    .then((response) => {
-                        setAllTweets(response.data);
-                        console.log(response.data);
-                        setRetweetTweet(0)
-                    })
-                    .catch((error) => {
-                        console.log(error.message);
-                        setAlertMessage(error.message);
-                        setRetweetTweet(0)
-                    }))
+    }, [id, deletedId, likedTweet, dislikedTweet, commentTweetId, retweetTweet, unretweetTweet,loggedInUser]);
 
-        }
-        if (unretweetTweet !== 0) {
-            axios.post(`http://localhost:9000/tweet/unretweet/${unretweetTweet}`, { "id": loggedInUser.id }, {
-                auth: {
-                    username: loggedInUser.email,
-                    password: "123"
-                }
-            })
-                .then(axios
-                    .get(`http://localhost:9000/tweet/profile/${id}`, {
-                        auth: {
-                            username: loggedInUser.email,
-                            password: "123"
-                        }
-                    })
-                    .then((response) => {
-                        setAllTweets(response.data);
-                        console.log(response.data);
-                        setUnRetweetTweet(0)
-                    })
-                    .catch((error) => {
-                        console.log(error.message);
-                        setAlertMessage(error.message);
-                        setUnRetweetTweet(0)
-                    }))
-
-
-        }
-        if (likedTweet !== 0) {
-            axios.post(`http://localhost:9000/tweet/like/${likedTweet}`, { "id": loggedInUser.id }, {
-                auth: {
-                    username: loggedInUser.email,
-                    password: "123"
-                }
-            })
-                .then(axios
-                    .get(`http://localhost:9000/tweet/profile/${id}`, {
-                        auth: {
-                            username: loggedInUser.email,
-                            password: "123"
-                        }
-                    })
-                    .then((response) => {
-                        setAllTweets(response.data);
-                        console.log(response.data);
-                        setLikedTweet(0)
-                    })
-                    .catch((error) => {
-                        console.log(error.message);
-                        setAlertMessage(error.message);
-                        setLikedTweet(0)
-                    }))
-
-        }
-        if (dislikedTweet !== 0) {
-            axios.post(`http://localhost:9000/tweet/dislike/${dislikedTweet}`, { "id": loggedInUser.id }, {
-                auth: {
-                    username: loggedInUser.email,
-                    password: "123"
-                }
-            })
-                .then(axios
-                    .get(`http://localhost:9000/tweet/profile/${id}`, {
-                        auth: {
-                            username: loggedInUser.email,
-                            password: "123"
-                        }
-                    })
-                    .then((response) => {
-                        setAllTweets(response.data);
-                        console.log(response.data);
-                        setDislikedTweet(0)
-                    })
-                    .catch((error) => {
-                        console.log(error.message);
-                        setAlertMessage(error.message);
-                        setDislikedTweet(0)
-                    }))
-
-
-        }
-
-        axios
-            .get(`http://localhost:9000/tweet/homepage/${loggedInUser.id}`, {
-                auth: {
-                    username: loggedInUser["email"],
-                    password: "123"
-                }
-            })
-            .then((response) => {
-                setAllTweets(response.data);
-                console.log("AUTH DATA  , ", response.data);
-            })
-            .catch((error) => {
-                console.log("CATHE DUSTU")
-                console.log(error.response.data.message);
-                setAlertMessage(error.response.data.message);
-
-            })
-    }, [id, deletedId, likedTweet, dislikedTweet,commentTweetId, retweetTweet, unretweetTweet]);
+    useEffect(() => {
+        setLoggedInUser(JSON.parse(localStorage?.getItem("loggedInUser")))
+    }, []);
 
     return (
         <div>
@@ -263,12 +269,12 @@ const Homepagetweets = ({ id }) => {
                             }} /> : <p className='my-4'>{data?.text}</p>}
 
                             <div className='flex gap-4 mt-4'>
-                                <img onClick={()=> commentHandler(data)} src={comment} alt='comment' />
+                                <img onClick={() => commentHandler(data)} src={comment} alt='comment' />
                                 <p>{data.commentsTweetIdList?.length}</p>
-                               
+
                                 <div className='flex gap-1'>
                                     {data.retweetsUserIdList?.includes(loggedInUser.id) ? <img onClick={() => unRetweetHandler(data)} src={retweet} alt='retweet' /> : <img onClick={() => retweetHandler(data)} src="https://file.rendit.io/n/STwpuiuwPmCkjEtyn2qO.svg" alt="Vector" className="w-6" />}
-                                   
+
                                 </div>
                                 <div className='flex gap-1'>
                                     {data.likedUserIdList?.includes(loggedInUser.id) ? <img onClick={() => dislikedTweetOnClickHandler(data)} src={likes} alt='likes' /> : <p onClick={() => likeOnClickHandler(data)}>🤍</p>}
@@ -281,10 +287,10 @@ const Homepagetweets = ({ id }) => {
                                 {data?.tweetId === activeId ? <button id={data?.tweetId} onClick={() => saveHandler()}> SAVE </button> : ""}
                                 {data.userTweetResponse.id === loggedInUser.id && <button onClick={() => deleteHandler(data)}> DELETE </button>}
                             </div>
-                            {commentTweetId === data.tweetId &&  <CommentTweet />}
+                            {commentTweetId === data.tweetId && <CommentTweet />}
                             {data.commentsTweetIdList?.length > 0 && data.commentsTweetIdList.map(comment => (
                                 <div>
-                                    <NewCommentTweet comId = {comment}/>
+                                    <NewCommentTweet comId={comment} />
                                     {/* BURASI DUZELTILECEK KISIMDI AXOIS VS .... */}
                                 </div>
                             ))}

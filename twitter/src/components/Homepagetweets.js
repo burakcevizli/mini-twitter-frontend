@@ -242,7 +242,7 @@ const Homepagetweets = ({ id }) => {
     }, []);
 
     return (
-        <div>
+        <div className='ml-72'>
             <NewTweet />
             {alertMessage ? (
                 <p>{alertMessage}</p>

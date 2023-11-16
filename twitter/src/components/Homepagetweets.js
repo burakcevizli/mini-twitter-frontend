@@ -261,22 +261,22 @@ const Homepagetweets = ({ id }) => {
                             <div className='flex gap-4'>
                                 <h1 className='font-bold'>{data?.userTweetResponse?.firstName}</h1>
                                 <p className='font-light'>
-                                    @{data?.userTweetResponse?.userName} <span>{data?.tweetDate}</span>
+                                    @{data?.userTweetResponse?.lastName} <span>{data?.tweetDate}</span>
                                 </p>
                             </div>
                             {activeId === data?.tweetId ? <input id={data?.tweetId} name={data?.text} type="text" value={edit} onChange={(e) => {
                                 setEdit(e.target.value)
                             }} /> : <p className='my-4'>{data?.text}</p>}
 
-                            <div className='flex gap-4 mt-4'>
+                            <div className='flex gap-4 mt-4 cursor-pointer'>
                                 <img onClick={() => commentHandler(data)} src={comment} alt='comment' />
                                 <p>{data.commentsTweetIdList?.length}</p>
 
-                                <div className='flex gap-1'>
+                                <div className='flex gap-1 cursor-pointer'>
                                     {data.retweetsUserIdList?.includes(loggedInUser.id) ? <img onClick={() => unRetweetHandler(data)} src={retweet} alt='retweet' /> : <img onClick={() => retweetHandler(data)} src="https://file.rendit.io/n/STwpuiuwPmCkjEtyn2qO.svg" alt="Vector" className="w-6" />}
 
                                 </div>
-                                <div className='flex gap-1'>
+                                <div className='flex gap-1 cursor-pointer'>
                                     {data.likedUserIdList?.includes(loggedInUser.id) ? <img onClick={() => dislikedTweetOnClickHandler(data)} src={likes} alt='likes' /> : <p onClick={() => likeOnClickHandler(data)}>🤍</p>}
                                     <p>{data?.likes}</p>
                                     <p>{data.likedUserIdList?.length === 0 ? null : data.likedUserIdList?.length}</p>
@@ -289,7 +289,7 @@ const Homepagetweets = ({ id }) => {
                             </div>
                             {commentTweetId === data.tweetId && <CommentTweet />}
                             {data.commentsTweetIdList?.length > 0 && data.commentsTweetIdList.map(comment => (
-                                <div>
+                                <div >
                                     <NewCommentTweet comId={comment} />
                                     {/* BURASI DUZELTILECEK KISIMDI AXOIS VS .... */}
                                 </div>

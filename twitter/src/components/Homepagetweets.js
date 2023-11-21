@@ -60,7 +60,7 @@ const Homepagetweets = ({ id }) => {
         )
             .then((response) => {
                 setData1([...data1, response.data])
-
+                setActiveId(0)
             })
 
     }
